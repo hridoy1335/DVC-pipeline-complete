@@ -1,0 +1,28 @@
+stages:
+  data_ingestion:
+    cmd: python data_ingestion.py
+    deps:
+    - data_ingestion.py
+    outs:
+    - data.csv
+  data_preprocessing:
+    cmd: python data_preprocessing.py
+    deps:
+    - data.csv
+    - data_ingestion.py
+    outs:
+    - preprocessed_data.csv
+  feature_engineering:
+    cmd: python feature_engineering.py
+    deps:
+    - preprocessed_data.csv
+    - data_preprocessing.py
+    outs:
+    - engineered_features.csv
+  model_training:
+    cmd: python model_training.py
+    deps:
+    - engineered_features.csv
+    - feature_engineering.py
+    outs:
+    - trained_model.pkl
